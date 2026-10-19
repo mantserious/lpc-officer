@@ -176,8 +176,8 @@
                 <i class="fa-solid fa-landmark text-sm"></i>
             </div>
             <div>
-                <h1 class="text-xs font-black leading-tight">কর্মকর্তা যোগদান ও ফাইল পোর্টাল</h1>
-                <p class="text-[9.5px] text-emerald-200">জেলা একাউন্টস এন্ড ফাইন্যান্স অফিস, নেত্রকোনা</p>
+                <h1 class="text-xs font-black leading-tight">কর্মকর্তা যোগদান ও ব্যক্তিগত ফাইল</h1>
+                <p class="text-[9.5px] text-emerald-200">ডিএএফও, নেত্রকোনা</p>
             </div>
         </div>
 
@@ -239,7 +239,7 @@
                         <label class="block text-[11px] font-bold text-slate-700 mb-1">
                             যোগদানকৃত নিজস্ব অফিসের নাম <span class="text-rose-500">*</span>
                         </label>
-                        <input type="text" id="officerCurrentOffice" required placeholder="উদাঃ উপজেলা হিসাবরক্ষণ অফিস, পূর্বধলা"
+                        <input type="text" id="officerCurrentOffice" required placeholder="উদাঃ উপজেলা শিক্ষা অফিস, নেত্রকোনা"
                             class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
                     </div>
 
@@ -247,19 +247,19 @@
                         <label class="block text-[11px] font-bold text-slate-700 mb-1">
                             কোথায় থেকে বদলি হয়ে এসেছেন (পূর্বতন কর্মস্থল) <span class="text-rose-500">*</span>
                         </label>
-                        <input type="text" id="previousOffice" required placeholder="উদাঃ জেলা হিসাব ভবন, ময়মনসিংহ"
+                        <input type="text" id="previousOffice" required placeholder="উদাঃ জেলা মৎস্য ভবন, ময়মনসিংহ"
                             class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
                     </div>
 
                     <!-- Pay ID & Phone -->
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-700 mb-1">পে-আইডি / NID <span class="text-rose-500">*</span></label>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1"> এনআইডি/NID <span class="text-rose-500">*</span></label>
                             <input type="text" id="officerId" required placeholder="1988451203"
                                 class="w-full text-xs font-num px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-700 mb-1">মোবাইল নম্বর <span class="text-rose-500">*</span></label>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">iBAS++মোবাইল নম্বর <span class="text-rose-500">*</span></label>
                             <input type="tel" id="officerPhone" required placeholder="017XXXXXXXX"
                                 class="w-full text-xs font-num px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
                         </div>
@@ -281,7 +281,7 @@
                                 <input type="date" id="nativeCalendarPicker" onchange="syncCalendarToDate(this.value)" class="sr-only">
                             </div>
                         </div>
-                        <span class="text-[9px] text-slate-500 mt-1 block">নিজে লিখুন অথবা ক্যালেন্ডার বাটনে চাপ দিয়ে তারিখ নির্বাচন করুন</span>
+                        <span class="text-[9px] text-slate-500 mt-1 block"> ক্যালেন্ডার বাটনে চাপ দিয়ে তারিখ নির্বাচন করুন</span>
                     </div>
 
                     <!-- Order Memo No & Remarks -->
@@ -301,13 +301,13 @@
                     <!-- 3 Mandatory Uploads -->
                     <div class="pt-2 border-t border-slate-100 space-y-2">
                         <label class="block text-[11px] font-black text-slate-800 flex items-center gap-1.5">
-                            <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i> ৩টি আবশ্যকীয় প্রমাণক স্ক্যান কপি <span class="text-rose-500">*</span>
+                            <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i> ৩টি আবশ্যকীয় প্রমাণক স্ক্যান কপি/(সরাসরি স্পষ্ট ছবি) <span class="text-rose-500">*</span>
                         </label>
 
                         <!-- Doc 1: Order -->
                         <div class="bg-blue-50/50 p-2.5 rounded-xl border border-blue-200 flex flex-col gap-1.5">
                             <div class="flex justify-between items-center text-[10.5px] font-bold text-blue-900">
-                                <span>১। অফিস আদেশ / ফরওয়ার্ডিং <span class="text-rose-500">*</span></span>
+                                <span>১। বদলি আদেশ / ফরওয়ার্ডিং <span class="text-rose-500">*</span></span>
                                 <span id="lblOrder" class="text-[9px] font-medium text-slate-400">অনির্বাচিত</span>
                             </div>
                             <input type="file" id="fileOrder" accept="image/*,application/pdf" required onchange="handleMobileUpload(event, 'order')"
@@ -338,7 +338,7 @@
                     <!-- Submit Button -->
                     <div class="pt-2">
                         <button type="submit" id="submitBtn" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 active:scale-95 text-white font-black text-xs shadow-md shadow-emerald-600/30 flex items-center justify-center gap-2 transition cursor-pointer">
-                            <i class="fa-solid fa-circle-check"></i> তথ্য ও LPC সার্ভারে সংরক্ষণ করুন
+                            <i class="fa-solid fa-circle-check"></i> ব্যক্তিগত ফাইল সংরক্ষণ করুন
                         </button>
                     </div>
                 </form>
@@ -362,7 +362,7 @@
             <!-- Search Bar in Folders -->
             <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2">
                 <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs pl-1"></i>
-                <input type="text" id="folderSearchInput" placeholder="নাম, পে-আইডি বা যোগদানের তারিখ দিয়ে খুঁজুন..." 
+                <input type="text" id="folderSearchInput" placeholder="নাম, NID বা যোগদানের তারিখ দিয়ে খুঁজুন..." 
                     onkeyup="filterFoldersList()" class="w-full text-xs outline-none bg-transparent">
             </div>
 
@@ -495,7 +495,7 @@
             ধন্যবাদ, <span id="tusharHeroName" class="text-emerald-700 font-black">--</span>
         </h2>
         <p class="text-[12px] font-extrabold text-slate-800 mb-0.5">ধন্যবাদান্তে: অডিটর তুষার</p>
-        <p class="text-[10px] font-bold text-emerald-800 mb-3">নেত্রকোনা পে পয়েন্ট ও Mant Serious টিম</p>
+        <p class="text-[10px] font-bold text-emerald-800 mb-3"> DAFO, নেত্রকোনা </p>
 
         <!-- Details Box -->
         <div class="bg-slate-50/90 border border-slate-200 rounded-2xl p-3 text-[11px] text-slate-700 space-y-1.5 mb-4 text-left shadow-xs">
@@ -569,7 +569,7 @@
                 
                 <div class="text-center border-b pb-2.5 border-slate-300">
                     <h2 class="text-base sm:text-lg font-bold">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h2>
-                    <p class="text-xs text-slate-600">কর্মকর্তার ব্যক্তিগত যোগদান ও LPC বিবরণী</p>
+                    <p class="text-xs text-slate-600">কর্মকর্তার ব্যক্তিগত ফাইল ও LPC বিবরণী</p>
                 </div>
 
                 <!-- 1. Officer Name BIG BOLD, 2. RED Joining Date, 3. Designation with Joined Office -->
@@ -591,7 +591,7 @@
                 <!-- Metadata left & right -->
                 <div class="grid grid-cols-2 gap-2 text-xs bg-white p-3 rounded-xl border border-slate-200">
                     <div class="space-y-1 border-r border-slate-200 pr-2">
-                        <p><span class="font-bold text-slate-500">পে-আইডি/NID:</span> <span id="a4Id" class="font-num font-bold text-slate-800 ml-1">--</span></p>
+                        <p><span class="font-bold text-slate-500">NID:</span> <span id="a4Id" class="font-num font-bold text-slate-800 ml-1">--</span></p>
                         <p><span class="font-bold text-slate-500">মোবাইল:</span> <span id="a4Phone" class="font-num font-bold text-slate-800 ml-1">--</span></p>
                         <p><span class="font-bold text-slate-500">স্ট্যাটাস:</span> <span id="a4Status" class="font-bold text-emerald-700 ml-1">LPC গৃহীত (চলমান)</span></p>
                     </div>
