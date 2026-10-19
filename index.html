@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>কর্মকর্তা যোগদান ও LPC ব্যবস্থাপনা | জেলা একাউন্টস এন্ড ফাইন্যান্স অফিস, নেত্রকোনা</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts & Kalpurush -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Noto+Serif+Bengali:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'Kalpurush';
+            src: local('Kalpurush'), local('Kalpurush ANSI'), url('https://fonts.cdnfonts.com/s/72922/Kalpurush.woff') format('woff');
+            font-display: swap;
+        }
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+        body, input, button, select, textarea {
+            font-family: 'Kalpurush', 'Hind Siliguri', 'Noto Serif Bengali', sans-serif;
+            touch-action: manipulation;
+        }
+        .font-num {
+            font-family: 'Kalpurush', 'Hind Siliguri', sans-serif;
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
+        }
+        .mobile-viewport {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #f8fafc;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @media print {
+            body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .no-print, #adminBottomNav, #topHeader, #gatekeeperModal, #loginOverlay, #tusharModal, #releaseModal, .mant-copyright-bar {
+                display: none !important;
+            }
+            .mobile-viewport {
+                max-width: 100% !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+            }
+            .a4-print-card {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+                padding: 4mm !important;
+                page-break-inside: avoid;
+            }
+            body.print-landscape {
+                page: landscape-sheet;
+            }
+            @page landscape-sheet {
+                size: A4 landscape;
+                margin: 5mm;
+            }
+            body.print-portrait {
+                page: portrait-sheet;
+            }
+            @page portrait-sheet {
+                size: A4 portrait;
+                margin: 5mm;
+            }
+            .print-3-cols {
+                display: grid !important;
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                gap: 8px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-200 text-slate-800 antialiased selection:bg-emerald-600 selection:text-white">
+
+<!-- 1. ENTRY GATEKEEPER POPUP (FIRST SCREEN) -->
+<div id="gatekeeperModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-xs w-full p-6 border-2 border-emerald-500/40 text-center relative overflow-hidden animate-in fade-in zoom-in duration-200">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center mx-auto mb-3 shadow-md shadow-emerald-600/30">
+            <i class="fa-solid fa-building-columns text-2xl"></i>
+        </div>
+        <p class="text-[11px] font-bold text-emerald-800 tracking-wider">জেলা একাউন্টস এন্ড ফাইন্যান্স অফিস, নেত্রকোনা</p>
+        <h2 class="text-base font-black text-slate-900 leading-snug mt-1 mb-4">
+            “আপনি কি নেত্রকোনা বদলি হয়ে এসেছেন?”
+        </h2>
+        
+        <div class="space-y-2.5">
+            <button onclick="handleGatekeeperChoice(true)" 
+                class="w-full py-3.5 px-4 rounded-2xl bg-emerald-600 active:bg-emerald-700 active:scale-95 text-white font-extrabold text-sm shadow-md flex items-center justify-center gap-2 transition">
+                <i class="fa-solid fa-circle-check text-base"></i> হ্যাঁ, বদলি হয়ে এসেছি
+            </button>
+            <button onclick="handleGatekeeperChoice(false)" 
+                class="w-full py-3 px-4 rounded-2xl bg-slate-800 active:bg-slate-900 active:scale-95 text-white font-bold text-xs shadow flex items-center justify-center gap-2 transition">
+                <i class="fa-solid fa-user-shield text-slate-400"></i> না (অ্যাডমিন প্রবেশ)
+            </button>
+        </div>
+        <p class="text-[10px] text-slate-500 mt-4">শুধুমাত্র কর্মকর্তাদের যোগদানের তথ্য এন্ট্রি</p>
+        <div class="mt-3 pt-2 border-t border-slate-100 text-[10px] font-bold text-slate-400 tracking-wider">
+            @MantSerious
+        </div>
+    </div>
+</div>
+
+<!-- 2. ADMIN LOGIN OVERLAY (Default Password: 2218) -->
+<div id="loginOverlay" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-[95] hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-xs w-full p-6 border border-slate-200 text-left relative">
+        <button onclick="hideAdminLoginModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="text-center mb-4">
+            <div class="w-12 h-12 bg-slate-900 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-2 shadow">
+                <i class="fa-solid fa-user-lock text-xl"></i>
+            </div>
+            <h3 class="text-base font-black text-slate-900">অ্যাডমিন কন্ট্রোল রুম</h3>
+            <p class="text-[10px] text-slate-500">ডিজিটাল ব্যক্তিগত ফাইল ও LPC আর্কাইভ</p>
+        </div>
+
+        <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">অ্যাডমিন ইউজার</label>
+                <input type="text" id="adminUsername" value="admin" required
+                    class="w-full text-xs font-mono px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none">
+            </div>
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">পাসওয়ার্ড</label>
+                <input type="password" id="adminPassword" required placeholder="পাসওয়ার্ড দিন" autocomplete="current-password"
+                    class="w-full text-xs font-mono px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none">
+            </div>
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-700 active:bg-emerald-800 text-white font-bold text-xs shadow-md flex items-center justify-center gap-1.5 active:scale-95 transition">
+                <i class="fa-solid fa-right-to-bracket"></i> লগইন করুন
+            </button>
+        </form>
+        <div class="mt-3 pt-2.5 border-t border-slate-100 flex justify-between items-center text-[10px]">
+            <button onclick="enterAsStaffDirectly()" class="font-semibold text-emerald-700">
+                ← কর্মকর্তা ফরমে ফিরুন
+            </button>
+            <span class="font-bold text-slate-400">@MantSerious</span>
+        </div>
+    </div>
+</div>
+
+<!-- MOBILE APPLICATION SHELL -->
+<div class="mobile-viewport flex flex-col">
+
+    <!-- Top App Bar -->
+    <header id="topHeader" class="no-print bg-gradient-to-r from-emerald-800 to-teal-900 text-white sticky top-0 z-30 px-4 py-3 shadow-md flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center border border-white/20 text-emerald-300">
+                <i class="fa-solid fa-landmark text-sm"></i>
+            </div>
+            <div>
+                <h1 class="text-xs font-black leading-tight">কর্মকর্তা যোগদান ও ফাইল পোর্টাল</h1>
+                <p class="text-[9.5px] text-emerald-200">জেলা একাউন্টস এন্ড ফাইন্যান্স অফিস, নেত্রকোনা</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+            <span id="roleBadge" class="text-[9px] font-extrabold px-2 py-0.5 rounded-md bg-white/15 border border-white/20 text-emerald-200">
+                কর্মকর্তা এন্ট্রি
+            </span>
+            <button id="adminLoginBtn" onclick="showAdminLoginModal()" class="w-7 h-7 rounded-lg bg-black/30 flex items-center justify-center text-xs text-white" title="অ্যাডমিন লগইন">
+                <i class="fa-solid fa-lock"></i>
+            </button>
+            <button id="adminLogoutBtn" onclick="performAdminLogout()" class="hidden w-7 h-7 rounded-lg bg-rose-600 flex items-center justify-center text-xs text-white" title="লগআউট">
+                <i class="fa-solid fa-power-off"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Scrollable Content Area -->
+    <main class="flex-grow p-3.5 pb-24 overflow-y-auto">
+
+        <!-- FOR OFFICERS: ONLY ENTRY FORM -->
+        <section id="tab-joining" class="tab-pane block space-y-3">
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">
+                            <i class="fa-solid fa-file-signature"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xs font-black text-slate-900">কর্মকর্তার যোগদানের তথ্য এন্ট্রি</h2>
+                            <p class="text-[9.5px] text-slate-500">সকল তথ্য নির্ভুলভাবে দিন ও ৩টি স্ক্যান কপি দিন</p>
+                        </div>
+                    </div>
+                    <span class="text-[9px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-md border border-emerald-200">
+                        সরাসরি এন্ট্রি
+                    </span>
+                </div>
+
+                <form id="mobileJoiningForm" onsubmit="handleMobileFormSubmit(event)" class="space-y-3">
+                    <!-- Officer Name -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">
+                            কর্মকর্তার নাম <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="officerName" required placeholder="উদাঃ মোঃ দেলোয়ার হোসেন"
+                            class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
+                    </div>
+
+                    <!-- Designation -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">
+                            পদবী <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="officerDesignation" required placeholder="উদাঃ উপজেলা হিসাবরক্ষণ কর্মকর্তা"
+                            class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
+                    </div>
+
+                    <!-- Joined Own Office & Previous Office -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">
+                            যোগদানকৃত নিজস্ব অফিসের নাম <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="officerCurrentOffice" required placeholder="উদাঃ উপজেলা হিসাবরক্ষণ অফিস, পূর্বধলা"
+                            class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">
+                            কোথায় থেকে বদলি হয়ে এসেছেন (পূর্বতন কর্মস্থল) <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="text" id="previousOffice" required placeholder="উদাঃ জেলা হিসাব ভবন, ময়মনসিংহ"
+                            class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
+                    </div>
+
+                    <!-- Pay ID & Phone -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">পে-আইডি / NID <span class="text-rose-500">*</span></label>
+                            <input type="text" id="officerId" required placeholder="1988451203"
+                                class="w-full text-xs font-num px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">মোবাইল নম্বর <span class="text-rose-500">*</span></label>
+                            <input type="tel" id="officerPhone" required placeholder="017XXXXXXXX"
+                                class="w-full text-xs font-num px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none bg-slate-50/50">
+                        </div>
+                    </div>
+
+                    <!-- Date Selection with DD/MM/YYYY Sync & Calendar -->
+                    <div class="bg-rose-50/80 p-3 rounded-xl border border-rose-200">
+                        <label class="block text-[11px] font-black text-rose-800 mb-1 flex items-center justify-between">
+                            <span><i class="fa-regular fa-calendar-check text-rose-600"></i> যোগদানের তারিখ (দিন/মাস/বছর) <span class="text-rose-500">*</span></span>
+                            <span class="text-[9px] text-rose-600 font-num font-bold">DD/MM/YYYY</span>
+                        </label>
+                        <div class="flex items-center gap-1.5">
+                            <input type="text" id="joiningDateManual" required placeholder="20/10/2026" maxlength="10"
+                                class="flex-1 text-xs font-num font-bold text-rose-700 px-3 py-2 rounded-lg border border-rose-300 bg-white outline-none">
+                            <div class="relative">
+                                <label for="nativeCalendarPicker" class="px-3 py-2 bg-rose-600 active:bg-rose-700 text-white text-xs font-bold rounded-lg flex items-center gap-1 cursor-pointer shadow-sm">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </label>
+                                <input type="date" id="nativeCalendarPicker" onchange="syncCalendarToDate(this.value)" class="sr-only">
+                            </div>
+                        </div>
+                        <span class="text-[9px] text-slate-500 mt-1 block">নিজে লিখুন অথবা ক্যালেন্ডার বাটনে চাপ দিয়ে তারিখ নির্বাচন করুন</span>
+                    </div>
+
+                    <!-- Order Memo No & Remarks -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10.5px] font-bold text-slate-700 mb-1">স্মারক নম্বর</label>
+                            <input type="text" id="orderMemoNo" placeholder="অম/হিসাব/২০২৬/১১২"
+                                class="w-full text-xs px-2.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10.5px] font-bold text-slate-700 mb-1">মন্তব্য</label>
+                            <input type="text" id="officerRemarks" placeholder="নিয়মিত বদলি সূত্রে..."
+                                class="w-full text-xs px-2.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none">
+                        </div>
+                    </div>
+
+                    <!-- 3 Mandatory Uploads -->
+                    <div class="pt-2 border-t border-slate-100 space-y-2">
+                        <label class="block text-[11px] font-black text-slate-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i> ৩টি আবশ্যকীয় প্রমাণক স্ক্যান কপি <span class="text-rose-500">*</span>
+                        </label>
+
+                        <!-- Doc 1: Order -->
+                        <div class="bg-blue-50/50 p-2.5 rounded-xl border border-blue-200 flex flex-col gap-1.5">
+                            <div class="flex justify-between items-center text-[10.5px] font-bold text-blue-900">
+                                <span>১। অফিস আদেশ / ফরওয়ার্ডিং <span class="text-rose-500">*</span></span>
+                                <span id="lblOrder" class="text-[9px] font-medium text-slate-400">অনির্বাচিত</span>
+                            </div>
+                            <input type="file" id="fileOrder" accept="image/*,application/pdf" required onchange="handleMobileUpload(event, 'order')"
+                                class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-blue-600 file:text-white cursor-pointer">
+                        </div>
+
+                        <!-- Doc 2: LPC Front -->
+                        <div class="bg-amber-50/50 p-2.5 rounded-xl border border-amber-200 flex flex-col gap-1.5">
+                            <div class="flex justify-between items-center text-[10.5px] font-bold text-amber-900">
+                                <span>২। LPC এপিঠ (Part-1 Front Scan) <span class="text-rose-500">*</span></span>
+                                <span id="lblLpcFront" class="text-[9px] font-medium text-amber-700">অনির্বাচিত</span>
+                            </div>
+                            <input type="file" id="fileLpcFront" accept="image/*,application/pdf" required onchange="handleMobileUpload(event, 'lpcFront')"
+                                class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-amber-600 file:text-white cursor-pointer">
+                        </div>
+
+                        <!-- Doc 3: LPC Back -->
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200 flex flex-col gap-1.5">
+                            <div class="flex justify-between items-center text-[10.5px] font-bold text-purple-900">
+                                <span>৩। LPC ওপিঠ (Part-2 Back Scan) <span class="text-rose-500">*</span></span>
+                                <span id="lblLpcBack" class="text-[9px] font-medium text-purple-700">অনির্বাচিত</span>
+                            </div>
+                            <input type="file" id="fileLpcBack" accept="image/*,application/pdf" required onchange="handleMobileUpload(event, 'lpcBack')"
+                                class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-purple-600 file:text-white cursor-pointer">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-2">
+                        <button type="submit" id="submitBtn" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 active:scale-95 text-white font-black text-xs shadow-md shadow-emerald-600/30 flex items-center justify-center gap-2 transition cursor-pointer">
+                            <i class="fa-solid fa-circle-check"></i> তথ্য ও LPC সার্ভারে সংরক্ষণ করুন
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ADMIN TAB 1: PERSONAL DOSSIER & DIGITAL FOLDERS -->
+        <section id="tab-folders" class="tab-pane hidden space-y-3">
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <h3 class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-folder-open text-amber-500"></i> ডিজিটাল ব্যক্তিগত ফাইল ও ফোল্ডার
+                    </h3>
+                    <p class="text-[9px] text-slate-500">নেত্রকোনা পে পয়েন্টের আওতাধীন সকল কর্মকর্তার স্থায়ী আর্কাইভ</p>
+                </div>
+                <span class="text-[9px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 font-num" id="folderTotalCount">
+                    ০ টি ফাইল
+                </span>
+            </div>
+
+            <!-- Search Bar in Folders -->
+            <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs pl-1"></i>
+                <input type="text" id="folderSearchInput" placeholder="নাম, পে-আইডি বা যোগদানের তারিখ দিয়ে খুঁজুন..." 
+                    onkeyup="filterFoldersList()" class="w-full text-xs outline-none bg-transparent">
+            </div>
+
+            <!-- Folders Grid List -->
+            <div id="foldersContainer" class="space-y-2.5">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+        <!-- ADMIN TAB 2: LPC REGISTRY MODULE -->
+        <section id="tab-lpc" class="tab-pane hidden space-y-3">
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <span class="text-xs font-black text-slate-900">LPC সেন্ট্রাল রেজিস্ট্রি</span>
+                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">সার্ভার সংরক্ষিত</span>
+            </div>
+            <!-- Filter Pills -->
+            <div class="flex items-center gap-1 bg-white p-1.5 rounded-xl border border-slate-200 shadow-sm text-[11px] font-bold">
+                <button onclick="setMobileLpcFilter('all')" id="lpcBtn-all" class="flex-1 py-1.5 rounded-lg bg-emerald-600 text-white shadow-xs">
+                    সকল (<span id="countAll">0</span>)
+                </button>
+                <button onclick="setMobileLpcFilter('received')" id="lpcBtn-received" class="flex-1 py-1.5 rounded-lg text-slate-600">
+                    LPC গ্রহণ (<span id="countReceived">0</span>)
+                </button>
+                <button onclick="setMobileLpcFilter('transferred')" id="lpcBtn-transferred" class="flex-1 py-1.5 rounded-lg text-slate-600">
+                    LPC বদলি (<span id="countTransferred">0</span>)
+                </button>
+            </div>
+
+            <div id="mobileLpcList" class="space-y-2.5">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- ADMIN TAB 3: DATE-WISE REPORT -->
+        <section id="tab-datewise" class="tab-pane hidden space-y-3">
+            <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-800">তারিখ অনুযায়ী ফিল্টার ও প্রিন্ট:</span>
+                    <button onclick="window.print()" class="px-3 py-1 bg-slate-800 text-white text-[11px] font-bold rounded-lg flex items-center gap-1">
+                        <i class="fa-solid fa-print"></i> ডেইট প্রিন্ট
+                    </button>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200">
+                    <i class="fa-solid fa-calendar-day text-rose-600 text-xs"></i>
+                    <input type="text" id="mobileFilterDate" placeholder="20/10/2026" onkeyup="renderMobileDateWise()"
+                        class="w-full text-xs font-num font-bold text-rose-700 bg-transparent outline-none">
+                </div>
+            </div>
+
+            <div id="mobileDateWiseList" class="space-y-2">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- ADMIN TAB 4: OFFICE SUMMARY -->
+        <section id="tab-officewise" class="tab-pane hidden space-y-3">
+            <div class="flex items-center justify-between px-1">
+                <span class="text-xs font-black text-slate-800">অফিস অনুযায়ী কর্মকর্তা বিন্যাস</span>
+                <button onclick="window.print()" class="px-2.5 py-1 bg-slate-800 text-white text-[10px] font-bold rounded-lg flex items-center gap-1">
+                    <i class="fa-solid fa-print"></i> সব প্রিন্ট
+                </button>
+            </div>
+            <div id="mobileOfficeWiseList" class="space-y-3">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Copyright Tag Bar (Always visible) -->
+    <div class="mant-copyright-bar no-print fixed bottom-2 left-0 right-0 max-w-[480px] mx-auto text-center pointer-events-none z-30">
+        <span class="inline-block bg-slate-900/80 backdrop-blur-xs text-amber-300 font-mono text-[10px] font-extrabold px-3 py-0.5 rounded-full shadow-sm">
+            স্বত্বাধিকার @MantSerious
+        </span>
+    </div>
+
+    <!-- ADMIN BOTTOM NAVIGATION BAR (Visible ONLY when logged in as Admin) -->
+    <nav id="adminBottomNav" class="no-print hidden fixed bottom-0 left-0 right-0 max-w-[480px] mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 z-40 flex items-center justify-around shadow-lg">
+        <button onclick="switchMobileTab('tab-folders')" id="nav-tab-folders" class="flex flex-col items-center py-1 px-1.5 text-emerald-700">
+            <i class="fa-solid fa-folder-tree text-base mb-0.5"></i>
+            <span class="text-[9px] font-extrabold">ফোল্ডারসমূহ</span>
+        </button>
+
+        <button onclick="switchMobileTab('tab-joining')" id="nav-tab-joining" class="flex flex-col items-center py-1 px-1.5 text-slate-400">
+            <i class="fa-solid fa-file-signature text-base mb-0.5"></i>
+            <span class="text-[9px] font-bold">নতুন এন্ট্রি</span>
+        </button>
+
+        <button onclick="switchMobileTab('tab-lpc')" id="nav-tab-lpc" class="flex flex-col items-center py-1 px-1.5 text-slate-400">
+            <i class="fa-solid fa-right-left text-base mb-0.5"></i>
+            <span class="text-[9px] font-bold">LPC মডিউল</span>
+        </button>
+
+        <button onclick="switchMobileTab('tab-datewise')" id="nav-tab-datewise" class="flex flex-col items-center py-1 px-1.5 text-slate-400">
+            <i class="fa-solid fa-calendar-day text-base mb-0.5"></i>
+            <span class="text-[9px] font-bold">ডেইট প্রিন্ট</span>
+        </button>
+
+        <button onclick="switchMobileTab('tab-officewise')" id="nav-tab-officewise" class="flex flex-col items-center py-1 px-1.5 text-slate-400">
+            <i class="fa-solid fa-sitemap text-base mb-0.5"></i>
+            <span class="text-[9px] font-bold">অফিস তালিকা</span>
+        </button>
+    </nav>
+</div>
+
+<!-- MODAL: SUCCESS POPUP (AUDITOR TUSHAR) -->
+<div id="tusharModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 overflow-y-auto">
+    <div class="bg-white rounded-[32px] shadow-2xl max-w-[340px] w-full p-6 border-4 border-amber-400 text-center relative overflow-hidden animate-in fade-in zoom-in duration-200">
+        
+        <!-- Top Pill Badge -->
+        <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-[11px] font-extrabold shadow-md mb-4">
+            <i class="fa-solid fa-certificate text-amber-300"></i>
+            <span>সফলভাবে এন্ট্রি সম্পন্ন হয়েছে</span>
+        </div>
+
+        <!-- Heart Gradient Icon -->
+        <div class="w-20 h-20 bg-gradient-to-tr from-amber-400 via-pink-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-pink-500/25 p-1">
+            <div class="w-full h-full bg-gradient-to-tr from-amber-400 via-rose-500 to-purple-600 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-heart text-white text-3xl"></i>
+            </div>
+        </div>
+
+        <!-- Header Welcome -->
+        <p class="text-[11px] font-bold text-slate-800 leading-snug mb-1">
+            “অডিটর তুষার এর ডিজিটাল ব্যক্তিগত ফাইলে আপনাকে স্বাগতম”
+        </p>
+
+        <!-- Big Bold Officer Name with Thank You -->
+        <h2 class="text-xl font-black text-slate-900 tracking-tight leading-tight mb-1">
+            ধন্যবাদ, <span id="tusharHeroName" class="text-emerald-700 font-black">--</span>
+        </h2>
+        <p class="text-[12px] font-extrabold text-slate-800 mb-0.5">ধন্যবাদান্তে: অডিটর তুষার</p>
+        <p class="text-[10px] font-bold text-emerald-800 mb-3">নেত্রকোনা পে পয়েন্ট ও ডিজিটাল আর্কাইভ টিম</p>
+
+        <!-- Details Box -->
+        <div class="bg-slate-50/90 border border-slate-200 rounded-2xl p-3 text-[11px] text-slate-700 space-y-1.5 mb-4 text-left shadow-xs">
+            <p class="flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i> 
+                <span>কর্মকর্তা: <strong id="tusharName" class="text-slate-900">--</strong></span>
+            </p>
+            <p class="flex items-center gap-1.5 font-num">
+                <i class="fa-solid fa-calendar-days text-rose-600 text-xs"></i> 
+                <span>যোগদানের তারিখ: <strong id="tusharDate" class="text-rose-600 font-bold">--</strong></span>
+            </p>
+            <p class="flex items-center gap-1.5 text-[10px] text-slate-600">
+                <i class="fa-solid fa-shield-halved text-blue-600 text-xs"></i> 
+                <span>অফিস আদেশ ও LPC এপিঠ-ওপিঠ ড্রাইভে স্থায়ীভাবে সংরক্ষিত!</span>
+            </p>
+        </div>
+
+        <!-- Action Buttons: Print, PDF, Download, and Close -->
+        <div class="space-y-2">
+            <button onclick="viewSelfDossierFromPopup()" class="w-full py-3.5 rounded-2xl bg-emerald-800 active:bg-emerald-900 active:scale-95 text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <i class="fa-solid fa-print"></i> নিজের A4 ব্যক্তিগত ফাইল প্রিন্ট ও PDF
+            </button>
+            <button onclick="closeTusharModal()" class="w-full py-2.5 rounded-2xl bg-slate-200 active:bg-slate-300 text-slate-800 font-bold text-xs transition cursor-pointer">
+                বন্ধ করুন
+            </button>
+        </div>
+
+        <!-- Copyright -->
+        <p class="text-[9.5px] font-bold text-slate-400 mt-3 tracking-wider">
+            @MantSerious
+        </p>
+    </div>
+</div>
+
+<!-- MODAL: A4 PERSONAL DOSSIER -->
+<div id="a4DossierModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full my-2 flex flex-col max-h-[96vh] overflow-hidden">
+        
+        <!-- Controls Header -->
+        <div class="no-print p-3 border-b border-slate-200 bg-slate-50 flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span class="text-xs font-black text-slate-900">A4 সাইজ একক ব্যক্তিগত ফাইল</span>
+                <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">@MantSerious</span>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+                <!-- Orientation Switcher -->
+                <div class="bg-slate-200 p-0.5 rounded-lg flex items-center text-[10px] font-bold">
+                    <button onclick="setMobileOrientation('portrait')" id="btnOrientPortrait" class="px-2 py-1 rounded bg-white text-slate-900 shadow-xs">
+                        পোর্ট্রেট
+                    </button>
+                    <button onclick="setMobileOrientation('landscape')" id="btnOrientLandscape" class="px-2 py-1 rounded text-slate-600">
+                        হরিজেন্টাল
+                    </button>
+                </div>
+
+                <button onclick="window.print()" class="px-3 py-1 bg-emerald-700 active:bg-emerald-800 text-white text-xs font-bold rounded-lg flex items-center gap-1">
+                    <i class="fa-solid fa-print"></i> ১ পাতায় প্রিন্ট / PDF
+                </button>
+
+                <button onclick="closeA4Modal()" class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Scrollable A4 Preview -->
+        <div class="p-3 sm:p-6 overflow-y-auto flex-grow bg-slate-100 flex justify-center">
+            <div id="a4PrintCard" class="a4-print-card bg-white w-full max-w-[794px] p-6 rounded-xl shadow border border-slate-300 text-slate-900 space-y-4">
+                
+                <div class="text-center border-b pb-2.5 border-slate-300">
+                    <h2 class="text-base sm:text-lg font-bold">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h2>
+                    <p class="text-xs text-slate-600">কর্মকর্তার ব্যক্তিগত যোগদান ও LPC বিবরণী</p>
+                </div>
+
+                <!-- 1. Officer Name BIG BOLD, 2. RED Joining Date, 3. Designation with Joined Office -->
+                <div class="text-center py-2 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                    <h1 id="a4Name" class="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
+                        --
+                    </h1>
+
+                    <div class="text-base sm:text-lg font-black text-rose-600 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>যোগদানের তারিখ: <span id="a4Date" class="underline underline-offset-4 font-num font-black">--</span></span>
+                    </div>
+
+                    <p id="a4DesignationOffice" class="text-xs sm:text-sm font-bold text-slate-800">
+                        --
+                    </p>
+                </div>
+
+                <!-- Metadata left & right -->
+                <div class="grid grid-cols-2 gap-2 text-xs bg-white p-3 rounded-xl border border-slate-200">
+                    <div class="space-y-1 border-r border-slate-200 pr-2">
+                        <p><span class="font-bold text-slate-500">পে-আইডি/NID:</span> <span id="a4Id" class="font-num font-bold text-slate-800 ml-1">--</span></p>
+                        <p><span class="font-bold text-slate-500">মোবাইল:</span> <span id="a4Phone" class="font-num font-bold text-slate-800 ml-1">--</span></p>
+                        <p><span class="font-bold text-slate-500">স্ট্যাটাস:</span> <span id="a4Status" class="font-bold text-emerald-700 ml-1">LPC গৃহীত (চলমান)</span></p>
+                    </div>
+                    <div class="space-y-1 pl-2">
+                        <p><span class="font-bold text-slate-500">পূর্বতন কর্মস্থল:</span> <span id="a4PrevOffice" class="font-medium text-slate-800 ml-1">--</span></p>
+                        <p><span class="font-bold text-slate-500">স্মারক নম্বর:</span> <span id="a4Memo" class="font-num text-slate-800 ml-1">--</span></p>
+                        <p><span class="font-bold text-slate-500">মন্তব্য:</span> <span id="a4Remarks" class="text-slate-700 ml-1">--</span></p>
+                    </div>
+                </div>
+
+                <!-- 3 Document Portions Together on 1 Sheet with Download option -->
+                <div>
+                    <div class="border-b border-slate-300 pb-1 mb-2 flex justify-between items-center">
+                        <h3 class="text-xs font-black text-slate-800 uppercase flex items-center gap-1">
+                            <i class="fa-solid fa-paperclip text-emerald-700"></i> সংযুক্ত প্রমাণক নথি (একসঙ্গে ৩টি অংশ)
+                        </h3>
+                        <span class="text-[9.5px] text-slate-500">১। আদেশ | ২। LPC এপিঠ | ৩। LPC ওপিঠ</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 print-3-cols gap-2 text-center text-xs">
+                        <!-- Order -->
+                        <div class="border border-slate-300 rounded-lg p-1.5 bg-slate-50 flex flex-col justify-between min-h-[175px]">
+                            <div class="flex justify-between items-center border-b pb-1 mb-1">
+                                <span class="font-bold text-[10.5px] text-blue-900">১। অফিস আদেশ</span>
+                                <button id="btnDlOrder" onclick="downloadDocFile('order')" class="no-print text-blue-700 hover:text-blue-900 text-[10px]" title="ডাউনলোড">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                            </div>
+                            <div id="a4FrameOrder" class="flex-grow flex items-center justify-center overflow-hidden bg-white rounded border">
+                                <span class="text-[10px] text-slate-400">নথি নেই</span>
+                            </div>
+                            <span id="a4NameOrder" class="text-[9px] text-slate-500 mt-1 block truncate">আদেশ</span>
+                        </div>
+
+                        <!-- LPC Front -->
+                        <div class="border border-amber-300 rounded-lg p-1.5 bg-amber-50/50 flex flex-col justify-between min-h-[175px]">
+                            <div class="flex justify-between items-center border-b pb-1 mb-1">
+                                <span class="font-bold text-[10.5px] text-amber-900">২। LPC এপিঠ</span>
+                                <button id="btnDlLpcFront" onclick="downloadDocFile('lpcFront')" class="no-print text-amber-700 hover:text-amber-900 text-[10px]" title="ডাউনলোড">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                            </div>
+                            <div id="a4FrameLpcFront" class="flex-grow flex items-center justify-center overflow-hidden bg-white rounded border">
+                                <span class="text-[10px] text-slate-400">নথি নেই</span>
+                            </div>
+                            <span id="a4NameLpcFront" class="text-[9px] text-slate-500 mt-1 block truncate">lpc_front</span>
+                        </div>
+
+                        <!-- LPC Back -->
+                        <div class="border border-purple-300 rounded-lg p-1.5 bg-purple-50/50 flex flex-col justify-between min-h-[175px]">
+                            <div class="flex justify-between items-center border-b pb-1 mb-1">
+                                <span class="font-bold text-[10.5px] text-purple-900">৩। LPC ওপিঠ</span>
+                                <button id="btnDlLpcBack" onclick="downloadDocFile('lpcBack')" class="no-print text-purple-700 hover:text-purple-900 text-[10px]" title="ডাউনলোড">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                            </div>
+                            <div id="a4FrameLpcBack" class="flex-grow flex items-center justify-center overflow-hidden bg-white rounded border">
+                                <span class="text-[10px] text-slate-400">নথি নেই</span>
+                            </div>
+                            <span id="a4NameLpcBack" class="text-[9px] text-slate-500 mt-1 block truncate">lpc_back</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signatures & Copyright -->
+                <div class="pt-6 flex justify-between text-xs text-center border-t border-slate-300">
+                    <p class="font-semibold text-slate-700">কর্মকর্তার স্বাক্ষর ও তারিখ</p>
+                    <span class="text-[9px] font-bold text-slate-400">আর্কাইভ কপি: @MantSerious</span>
+                    <p class="font-bold text-slate-900">যাচাইকারী কর্মকর্তার স্বাক্ষর</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: OFFICER RELEASE (ADMIN ONLY) -->
+<div id="releaseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-xs w-full p-5 border border-slate-200 relative text-left">
+        <button onclick="closeReleaseModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="text-center mb-3">
+            <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center mx-auto mb-1.5 text-base">
+                <i class="fa-solid fa-plane-departure"></i>
+            </div>
+            <h3 class="text-sm font-black text-slate-900">বদলি ও অব্যাহতি প্রদান (অ্যাডমিন)</h3>
+            <p id="releaseOfficerLabel" class="text-[10.5px] font-bold text-emerald-800">--</p>
+        </div>
+
+        <form onsubmit="handleMobileReleaseSubmit(event)" class="space-y-2.5">
+            <input type="hidden" id="releaseHiddenId">
+            <div>
+                <label class="block text-[10.5px] font-bold text-slate-700 mb-1">অব্যাহতির তারিখ (DD/MM/YYYY) <span class="text-rose-500">*</span></label>
+                <input type="text" id="releaseDate" required placeholder="20/10/2026" maxlength="10"
+                    class="w-full text-xs font-num px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-[10.5px] font-bold text-slate-700 mb-1">নতুন গন্তব্য কর্মস্থল <span class="text-rose-500">*</span></label>
+                <input type="text" id="releaseNewOffice" required placeholder="উদাঃ জেলা হিসাব ভবন, ঢাকা"
+                    class="w-full text-xs px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-[10.5px] font-bold text-slate-700 mb-1">বদলি/অব্যাহতি আদেশ <span class="text-rose-500">*</span></label>
+                <input type="file" id="releaseFile" accept="image/*,application/pdf" required
+                    class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-amber-600 file:text-white">
+            </div>
+            <div class="pt-2">
+                <button type="submit" class="w-full py-2.5 bg-amber-600 active:bg-amber-700 text-white font-bold text-xs rounded-xl shadow active:scale-95 transition">
+                    অব্যাহতি দিয়ে LPC বদলি মডিউলে পাঠান
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Mobile Native Toast -->
+<div id="mobileToast" class="fixed bottom-16 left-4 right-4 max-w-[420px] mx-auto z-[120] bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs transition-opacity duration-300 opacity-0 pointer-events-none">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toastText">সম্পন্ন হয়েছে!</span>
+</div>
+
+<!-- JAVASCRIPT APPLICATION CORE -->
+<script>
+    const INITIAL_OFFICERS = [
+        {
+            id: "EMP-2026-001",
+            name: "মোঃ দেলোয়ার হোসেন",
+            designation: "উপজেলা হিসাবরক্ষণ কর্মকর্তা",
+            officerCurrentOffice: "উপজেলা হিসাবরক্ষণ অফিস, পূর্বধলা",
+            previousOffice: "ময়মনসিংহ জেলা হিসাব ভবন",
+            officerId: "1988451203",
+            phone: "01712345678",
+            joiningDate: "20/10/2026",
+            orderMemoNo: "অম/হিসাব/প্রশা-৪/২০২৬/৩৪০",
+            remarks: "নিয়মিত বদলি সূত্রে যোগদান।",
+            status: "active",
+            docOrder: { name: "আদেশ_দেলোয়ার_20_10_2026.pdf", type: "application/pdf", data: "https://placehold.co/600x800/dbeafe/1e40af?text=Office+Order+Scan" },
+            docLpcFront: { name: "LPC_এপিঠ_20_10_2026.jpg", type: "image/jpeg", data: "https://placehold.co/600x800/fef3c7/b45309?text=LPC+Part-1+(Front)+Scan" },
+            docLpcBack: { name: "LPC_ওপিঠ_20_10_2026.jpg", type: "image/jpeg", data: "https://placehold.co/600x800/f3e8ff/6b21a8?text=LPC+Part-2+(Back)+Scan" },
+            releaseData: null
+        }
+    ];
+
+    let currentRole = 'staff';
+    let lastEnteredOfficerId = null;
+    let currentModalOfficer = null;
+    let mobileUploadedFiles = { order: null, lpcFront: null, lpcBack: null };
+    let currentLpcTab = 'all';
+
+    // 1-Second "Thank You sir" Voice Audio
+    function playThankYouSirSound() {
+        try {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance("Thank you sir");
+                utterance.rate = 1.1;
+                utterance.pitch = 1.0;
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
+            }
+        } catch(e) {}
+
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(587.33, now);
+            osc.frequency.exponentialRampToValueAtTime(880.00, now + 0.15);
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.5);
+        } catch(e) {}
+    }
+
+    function getStorageOfficers() {
+        const d = localStorage.getItem('netrokona_mobile_officers_v7');
+        if (!d) {
+            localStorage.setItem('netrokona_mobile_officers_v7', JSON.stringify(INITIAL_OFFICERS));
+            return INITIAL_OFFICERS;
+        }
+        try { return JSON.parse(d); } catch(e) { return INITIAL_OFFICERS; }
+    }
+
+    function saveStorageOfficers(list) {
+        try {
+            localStorage.setItem('netrokona_mobile_officers_v7', JSON.stringify(list));
+        } catch(e) {
+            console.error("Storage limit reached, keeping active in memory:", e);
+        }
+    }
+
+    window.onload = function() {
+        // Set Default Date: 20/10/2026
+        const todayDate = "20/10/2026";
+        document.getElementById('joiningDateManual').value = todayDate;
+        document.getElementById('mobileFilterDate').value = todayDate;
+        document.getElementById('nativeCalendarPicker').value = "2026-10-20";
+
+        // Admin Session Persistence
+        const isAdmin = sessionStorage.getItem('netrokona_admin_auth') === 'true';
+        if (isAdmin) {
+            currentRole = 'admin';
+            document.getElementById('gatekeeperModal').classList.add('hidden');
+            updateMobileRoleUI();
+            switchMobileTab('tab-folders');
+        } else {
+            document.getElementById('gatekeeperModal').classList.remove('hidden');
+            updateMobileRoleUI();
+        }
+    };
+
+    function handleGatekeeperChoice(isStaff) {
+        document.getElementById('gatekeeperModal').classList.add('hidden');
+        if (isStaff) {
+            currentRole = 'staff';
+            playThankYouSirSound();
+            showMobileToast("Welcome! Thank You sir. তথ্য এন্ট্রি করুন।");
+            updateMobileRoleUI();
+            switchMobileTab('tab-joining');
+        } else {
+            showAdminLoginModal();
+        }
+    }
+
+    function showAdminLoginModal() {
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('loginOverlay').classList.remove('hidden');
+    }
+
+    function hideAdminLoginModal() {
+        document.getElementById('loginOverlay').classList.add('hidden');
+    }
+
+    function enterAsStaffDirectly() {
+        hideAdminLoginModal();
+        currentRole = 'staff';
+        updateMobileRoleUI();
+        switchMobileTab('tab-joining');
+    }
+
+    function handleAdminLogin(e) {
+        e.preventDefault();
+        const u = document.getElementById('adminUsername').value.trim();
+        const p = document.getElementById('adminPassword').value.trim();
+
+        if (u === 'admin' && p === '2218') {
+            currentRole = 'admin';
+            sessionStorage.setItem('netrokona_admin_auth', 'true');
+            hideAdminLoginModal();
+            updateMobileRoleUI();
+            switchMobileTab('tab-folders');
+            showMobileToast("অ্যাডমিন হিসেবে সফলভাবে লগইন হয়েছেন!");
+        } else {
+            showMobileToast("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।", true);
+        }
+    }
+
+    function performAdminLogout() {
+        sessionStorage.removeItem('netrokona_admin_auth');
+        currentRole = 'staff';
+        updateMobileRoleUI();
+        showMobileToast("লগআউট সম্পন্ন হয়েছে।");
+        document.getElementById('gatekeeperModal').classList.remove('hidden');
+    }
+
+    function updateMobileRoleUI() {
+        const badge = document.getElementById('roleBadge');
+        const loginBtn = document.getElementById('adminLoginBtn');
+        const logoutBtn = document.getElementById('adminLogoutBtn');
+        const adminNav = document.getElementById('adminBottomNav');
+
+        if (currentRole === 'admin') {
+            badge.textContent = "অ্যাডমিন প্যানেল";
+            badge.className = "text-[9px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-500/25 border border-emerald-400 text-emerald-300";
+            loginBtn.classList.add('hidden');
+            logoutBtn.classList.remove('hidden');
+            adminNav.classList.remove('hidden');
+            renderFoldersList();
+            renderMobileLpcList();
+            renderMobileDateWise();
+            renderMobileOfficeWise();
+        } else {
+            badge.textContent = "কর্মকর্তা এন্ট্রি";
+            badge.className = "text-[9px] font-extrabold px-2 py-0.5 rounded-md bg-white/15 border border-white/20 text-emerald-200";
+            loginBtn.classList.remove('hidden');
+            logoutBtn.classList.add('hidden');
+            adminNav.classList.add('hidden');
+            switchMobileTab('tab-joining');
+        }
+    }
+
+    function syncCalendarToDate(isoDate) {
+        if (!isoDate) return;
+        const p = isoDate.split('-');
+        if (p.length === 3) {
+            // YYYY-MM-DD -> DD/MM/YYYY
+            document.getElementById('joiningDateManual').value = `${p[2]}/${p[1]}/${p[0]}`;
+            showMobileToast(`তারিখ নির্বাচিত: ${p[2]}/${p[1]}/${p[0]}`);
+        }
+    }
+
+    function switchMobileTab(tabId) {
+        document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('#adminBottomNav button').forEach(b => {
+            b.classList.remove('text-emerald-700');
+            b.classList.add('text-slate-400');
+        });
+
+        const target = document.getElementById(tabId);
+        const navBtn = document.getElementById(`nav-${tabId}`);
+        if (target) target.classList.remove('hidden');
+        if (navBtn) {
+            navBtn.classList.remove('text-slate-400');
+            navBtn.classList.add('text-emerald-700');
+        }
+
+        if (tabId === 'tab-folders') renderFoldersList();
+        if (tabId === 'tab-lpc') renderMobileLpcList();
+        if (tabId === 'tab-datewise') renderMobileDateWise();
+        if (tabId === 'tab-officewise') renderMobileOfficeWise();
+    }
+
+    function handleMobileUpload(e, key) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const dateStr = (document.getElementById('joiningDateManual').value || 'date').replace(/\//g, '-');
+        const fileExt = file.name.split('.').pop();
+        const datePrefixedName = `${key}_${dateStr}.${fileExt}`;
+
+        // Create lightweight object URL for immediate responsiveness
+        const blobUrl = URL.createObjectURL(file);
+
+        mobileUploadedFiles[key] = {
+            name: datePrefixedName,
+            originalName: file.name,
+            type: file.type || (fileExt.toLowerCase() === 'pdf' ? 'application/pdf' : 'image/jpeg'),
+            data: blobUrl
+        };
+
+        const label = file.name.length > 12 ? file.name.substring(0, 10) + '...' : file.name;
+        if (key === 'order') document.getElementById('lblOrder').textContent = `✓ ${label}`;
+        if (key === 'lpcFront') document.getElementById('lblLpcFront').textContent = `✓ ${label}`;
+        if (key === 'lpcBack') document.getElementById('lblLpcBack').textContent = `✓ ${label}`;
+    }
+
+    function handleMobileFormSubmit(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('officerName').value.trim();
+        const designation = document.getElementById('officerDesignation').value.trim();
+        const officerCurrentOffice = document.getElementById('officerCurrentOffice').value.trim();
+        const previousOffice = document.getElementById('previousOffice').value.trim();
+        const officerId = document.getElementById('officerId').value.trim();
+        const phone = document.getElementById('officerPhone').value.trim();
+        const joiningDate = document.getElementById('joiningDateManual').value.trim();
+        const orderMemoNo = document.getElementById('orderMemoNo').value.trim() || 'স্মারক অনুল্লিখিত';
+        const remarks = document.getElementById('officerRemarks').value.trim() || 'নিয়মিত বদলি সূত্রে যোগদান।';
+
+        // 3 Scans Check
+        if (!mobileUploadedFiles.order || !mobileUploadedFiles.lpcFront || !mobileUploadedFiles.lpcBack) {
+            showMobileToast("অফিস আদেশ, LPC এপিঠ এবং ওপিঠ—৩টি কপিই নির্বাচন করুন!", true);
+            return;
+        }
+
+        const newOfficer = {
+            id: 'EMP-2026-' + Math.floor(1000 + Math.random() * 9000),
+            name,
+            designation,
+            officerCurrentOffice,
+            previousOffice,
+            officerId,
+            phone,
+            joiningDate,
+            orderMemoNo,
+            remarks,
+            status: 'active',
+            docOrder: { ...mobileUploadedFiles.order },
+            docLpcFront: { ...mobileUploadedFiles.lpcFront },
+            docLpcBack: { ...mobileUploadedFiles.lpcBack },
+            releaseData: null
+        };
+
+        const list = getStorageOfficers();
+        list.unshift(newOfficer);
+        saveStorageOfficers(list);
+
+        lastEnteredOfficerId = newOfficer.id;
+
+        try {
+            confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+        } catch(e) {}
+
+        // Populate Success Modal
+        document.getElementById('tusharHeroName').textContent = name;
+        document.getElementById('tusharName').textContent = name;
+        document.getElementById('tusharDate').textContent = joiningDate;
+        document.getElementById('tusharModal').classList.remove('hidden');
+
+        // Reset form inputs safely
+        document.getElementById('mobileJoiningForm').reset();
+        document.getElementById('joiningDateManual').value = joiningDate;
+        mobileUploadedFiles = { order: null, lpcFront: null, lpcBack: null };
+        document.getElementById('lblOrder').textContent = "অনির্বাচিত";
+        document.getElementById('lblLpcFront').textContent = "অনির্বাচিত";
+        document.getElementById('lblLpcBack').textContent = "অনির্বাচিত";
+
+        if (currentRole === 'admin') {
+            renderFoldersList();
+            renderMobileLpcList();
+        }
+    }
+
+    function closeTusharModal() {
+        document.getElementById('tusharModal').classList.add('hidden');
+    }
+
+    function viewSelfDossierFromPopup() {
+        closeTusharModal();
+        if (lastEnteredOfficerId) openA4Modal(lastEnteredOfficerId);
+    }
+
+    function setMobileOrientation(mode) {
+        const btnP = document.getElementById('btnOrientPortrait');
+        const btnL = document.getElementById('btnOrientLandscape');
+        if (mode === 'portrait') {
+            btnP.className = "px-2 py-1 rounded bg-white text-slate-900 shadow-xs";
+            btnL.className = "px-2 py-1 rounded text-slate-600";
+            document.body.classList.remove('print-landscape');
+            document.body.classList.add('print-portrait');
+        } else {
+            btnL.className = "px-2 py-1 rounded bg-white text-slate-900 shadow-xs";
+            btnP.className = "px-2 py-1 rounded text-slate-600";
+            document.body.classList.remove('print-portrait');
+            document.body.classList.add('print-landscape');
+        }
+    }
+
+    function openA4Modal(officerId) {
+        const list = getStorageOfficers();
+        const o = list.find(item => item.id === officerId);
+        if (!o) {
+            showMobileToast("ফাইল খুঁজে পাওয়া যায়নি!", true);
+            return;
+        }
+
+        currentModalOfficer = o;
+
+        // Big Bold Name
+        document.getElementById('a4Name').textContent = o.name;
+        // Bright RED Joining Date
+        document.getElementById('a4Date').textContent = o.joiningDate;
+        // Designation + Joined Office
+        document.getElementById('a4DesignationOffice').textContent = `${o.designation} | ${o.officerCurrentOffice}`;
+
+        document.getElementById('a4Id').textContent = o.officerId;
+        document.getElementById('a4Phone').textContent = o.phone;
+        document.getElementById('a4PrevOffice').textContent = o.previousOffice;
+        document.getElementById('a4Memo').textContent = o.orderMemoNo;
+        document.getElementById('a4Remarks').textContent = o.remarks;
+
+        const st = document.getElementById('a4Status');
+        if (o.status === 'released') {
+            st.textContent = `বদলিকৃত (${o.releaseData.releaseDate} → ${o.releaseData.newOffice})`;
+            st.className = "font-bold text-amber-800 ml-1";
+        } else {
+            st.textContent = "LPC গৃহীত (চলমান)";
+            st.className = "font-bold text-emerald-700 ml-1";
+        }
+
+        renderA4Doc('a4FrameOrder', 'a4NameOrder', o.docOrder, 'অফিস আদেশ');
+        renderA4Doc('a4FrameLpcFront', 'a4NameLpcFront', o.docLpcFront, 'LPC এপিঠ');
+        renderA4Doc('a4FrameLpcBack', 'a4NameLpcBack', o.docLpcBack, 'LPC ওপিঠ');
+
+        setMobileOrientation('portrait');
+        document.getElementById('a4DossierModal').classList.remove('hidden');
+    }
+
+    function renderA4Doc(frameId, nameId, doc, defaultName) {
+        const frame = document.getElementById(frameId);
+        const nameLbl = document.getElementById(nameId);
+        if (!doc || !doc.data) {
+            frame.innerHTML = `<span class="text-[9px] text-slate-400 p-2">নথি নেই</span>`;
+            nameLbl.textContent = defaultName;
+            return;
+        }
+        nameLbl.textContent = doc.name || defaultName;
+        if (doc.type && doc.type.startsWith('image/')) {
+            frame.innerHTML = `<img src="${doc.data}" class="max-h-[140px] w-auto object-contain rounded" alt="${defaultName}">`;
+        } else {
+            frame.innerHTML = `<iframe src="${doc.data}" class="w-full h-[140px] border-none" title="${defaultName}"></iframe>`;
+        }
+    }
+
+    function downloadDocFile(key) {
+        if (!currentModalOfficer) return;
+        let doc = null;
+        if (key === 'order') doc = currentModalOfficer.docOrder;
+        if (key === 'lpcFront') doc = currentModalOfficer.docLpcFront;
+        if (key === 'lpcBack') doc = currentModalOfficer.docLpcBack;
+
+        if (!doc || !doc.data) {
+            showMobileToast("কোন মূল ফাইল পাওয়া যায়নি।", true);
+            return;
+        }
+
+        const dateSuffix = currentModalOfficer.joiningDate.replace(/\//g, '-');
+        const filename = `${currentModalOfficer.name}_${key}_${dateSuffix}.${(doc.type && doc.type.includes('pdf')) ? 'pdf' : 'jpg'}`;
+
+        const a = document.createElement('a');
+        a.href = doc.data;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showMobileToast(`${filename} ডাউনলোড হচ্ছে...`);
+    }
+
+    function closeA4Modal() {
+        document.getElementById('a4DossierModal').classList.add('hidden');
+        currentModalOfficer = null;
+    }
+
+    // ADMIN FUNCTIONS: DIGITAL PERSONAL FOLDERS
+    function renderFoldersList() {
+        if (currentRole !== 'admin') return;
+        const officers = getStorageOfficers();
+        document.getElementById('folderTotalCount').textContent = `${officers.length} টি ফাইল`;
+        filterFoldersList();
+    }
+
+    function filterFoldersList() {
+        const officers = getStorageOfficers();
+        const q = (document.getElementById('folderSearchInput')?.value || '').trim().toLowerCase();
+        const container = document.getElementById('foldersContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        let list = officers;
+        if (q) {
+            list = list.filter(o => 
+                o.name.toLowerCase().includes(q) ||
+                o.officerId.toLowerCase().includes(q) ||
+                o.joiningDate.includes(q) ||
+                o.officerCurrentOffice.toLowerCase().includes(q)
+            );
+        }
+
+        if (list.length === 0) {
+            container.innerHTML = `
+                <div class="bg-white p-6 rounded-2xl text-center border border-slate-200">
+                    <i class="fa-regular fa-folder-open text-2xl text-slate-300 mb-1"></i>
+                    <p class="text-xs text-slate-500 font-bold">কোন ব্যক্তিগত ফাইল পাওয়া যায়নি</p>
+                </div>
+            `;
+            return;
+        }
+
+        list.forEach((item, idx) => {
+            const isRel = item.status === 'released';
+            const card = document.createElement('div');
+            card.className = "bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2 relative overflow-hidden";
+            card.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-10 h-10 rounded-xl ${isRel ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-800'} flex items-center justify-center text-lg shadow-xs">
+                            <i class="fa-solid fa-folder"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-black text-slate-900">${idx + 1}. ${item.name}</h4>
+                            <p class="text-[10px] text-slate-500">${item.designation}</p>
+                            <p class="text-[9.5px] text-emerald-800 font-semibold">${item.officerCurrentOffice}</p>
+                        </div>
+                    </div>
+                    <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full ${isRel ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">
+                        ${isRel ? 'বদলি সম্পন্ন' : 'সক্রিয় (LPC)'}
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-2 rounded-xl text-[10px] border border-slate-100 font-num">
+                    <div>
+                        <span class="text-slate-500 font-bold">যোগদান:</span>
+                        <strong class="text-rose-600 ml-1">${item.joiningDate}</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 font-bold">পে-আইডি:</span>
+                        <span class="text-slate-800 font-bold ml-1">${item.officerId}</span>
+                    </div>
+                    <div class="col-span-2 text-slate-500 truncate">
+                        <span class="font-bold">পূর্বতন:</span> ${item.previousOffice}
+                    </div>
+                </div>
+
+                <!-- Action Toolbar Inside Folder -->
+                <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+                    <span class="text-[9px] text-slate-400 font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-cloud-check text-emerald-600"></i> ৩টি নথি সংরক্ষিত
+                    </span>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="openA4Modal('${item.id}')" class="px-2.5 py-1 bg-emerald-700 active:bg-emerald-800 text-white font-extrabold rounded-lg text-[10px] flex items-center gap-1 shadow-xs cursor-pointer">
+                            <i class="fa-solid fa-file-lines"></i> ফাইল খুলুন / প্রিন্ট
+                        </button>
+                        ${!isRel ? `
+                            <button onclick="openReleaseModal('${item.id}')" class="px-2 py-1 bg-amber-500 active:bg-amber-600 text-slate-900 font-bold rounded-lg text-[10px] shadow-xs cursor-pointer">
+                                বদলি
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function setMobileLpcFilter(type) {
+        currentLpcTab = type;
+        ['all', 'received', 'transferred'].forEach(t => {
+            const btn = document.getElementById(`lpcBtn-${t}`);
+            if (t === type) {
+                btn.className = "flex-1 py-1.5 rounded-lg bg-emerald-600 text-white shadow-xs";
+            } else {
+                btn.className = "flex-1 py-1.5 rounded-lg text-slate-600";
+            }
+        });
+        renderMobileLpcList();
+    }
+
+    function renderMobileLpcList() {
+        if (currentRole !== 'admin') return;
+        const officers = getStorageOfficers();
+        const container = document.getElementById('mobileLpcList');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const cAll = officers.length;
+        const cRec = officers.filter(o => o.status !== 'released').length;
+        const cRel = officers.filter(o => o.status === 'released').length;
+
+        document.getElementById('countAll').textContent = cAll;
+        document.getElementById('countReceived').textContent = cRec;
+        document.getElementById('countTransferred').textContent = cRel;
+
+        let list = officers;
+        if (currentLpcTab === 'received') list = list.filter(o => o.status !== 'released');
+        if (currentLpcTab === 'transferred') list = list.filter(o => o.status === 'released');
+
+        list.forEach((item, idx) => {
+            const isRel = item.status === 'released';
+            const row = document.createElement('div');
+            row.className = "bg-white p-3 rounded-2xl border border-slate-200 shadow-sm space-y-1.5";
+            row.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="text-xs font-black text-slate-900">${idx + 1}. ${item.name}</h4>
+                        <p class="text-[10px] text-slate-500">${item.designation} (${item.officerCurrentOffice})</p>
+                    </div>
+                    <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${isRel ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">
+                        ${isRel ? 'LPC বদলি' : 'LPC গ্রহণ'}
+                    </span>
+                </div>
+                <div class="text-[10px] font-num text-slate-600 flex justify-between items-center border-t pt-1.5">
+                    <span class="text-rose-600 font-bold">যোগদান: ${item.joiningDate}</span>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="openA4Modal('${item.id}')" class="px-2 py-1 bg-emerald-700 text-white font-bold rounded-lg text-[10px] cursor-pointer">
+                            A4 প্রিন্ট
+                        </button>
+                        ${!isRel ? `
+                            <button onclick="openReleaseModal('${item.id}')" class="px-2 py-1 bg-amber-500 text-slate-900 font-bold rounded-lg text-[10px] cursor-pointer">
+                                বদলি প্রদান
+                            </button>
+                        ` : `<span class="text-slate-500 text-[9px]">অব্যাহতি: ${item.releaseData.releaseDate}</span>`}
+                    </div>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    function openReleaseModal(id) {
+        if (currentRole !== 'admin') {
+            showMobileToast("শুধুমাত্র অ্যাডমিন বদলি প্রদান করতে পারবেন।", true);
+            return;
+        }
+        const list = getStorageOfficers();
+        const o = list.find(item => item.id === id);
+        if (!o) return;
+        document.getElementById('releaseHiddenId').value = o.id;
+        document.getElementById('releaseOfficerLabel').textContent = `${o.name} (${o.designation})`;
+        document.getElementById('releaseDate').value = "20/10/2026";
+        document.getElementById('releaseModal').classList.remove('hidden');
+    }
+
+    function closeReleaseModal() {
+        document.getElementById('releaseModal').classList.add('hidden');
+    }
+
+    function handleMobileReleaseSubmit(e) {
+        e.preventDefault();
+        const id = document.getElementById('releaseHiddenId').value;
+        const relDate = document.getElementById('releaseDate').value.trim();
+        const newOffice = document.getElementById('releaseNewOffice').value.trim();
+        const file = document.getElementById('releaseFile').files[0];
+
+        const list = getStorageOfficers();
+        const idx = list.findIndex(o => o.id === id);
+        if (idx === -1) return;
+
+        list[idx].status = 'released';
+        list[idx].releaseData = {
+            releaseDate: relDate,
+            newOffice,
+            orderFile: file ? { name: file.name, type: file.type, data: URL.createObjectURL(file) } : null
+        };
+        saveStorageOfficers(list);
+        closeReleaseModal();
+        showMobileToast("কর্মকর্তা বদলি হয়ে LPC বদলি মডিউলে সংরক্ষিত হয়েছে।");
+        renderFoldersList();
+        renderMobileLpcList();
+    }
+
+    function renderMobileDateWise() {
+        if (currentRole !== 'admin') return;
+        const list = getStorageOfficers();
+        const searchDate = document.getElementById('mobileFilterDate').value.trim();
+        const container = document.getElementById('mobileDateWiseList');
+        if (!container) return;
+        container.innerHTML = '';
+
+        let filtered = list;
+        if (searchDate) filtered = filtered.filter(o => o.joiningDate.includes(searchDate));
+
+        filtered.forEach((o, i) => {
+            const card = document.createElement('div');
+            card.className = "bg-white p-2.5 rounded-xl border border-slate-200 text-xs flex justify-between items-center";
+            card.innerHTML = `
+                <div>
+                    <h4 class="font-bold text-slate-900">${i+1}. ${o.name}</h4>
+                    <p class="text-[10px] text-slate-500 font-num">${o.designation} | ${o.officerCurrentOffice}</p>
+                    <p class="text-[10px] text-rose-600 font-bold font-num">তারিখ: ${o.joiningDate}</p>
+                </div>
+                <button onclick="openA4Modal('${o.id}')" class="px-2.5 py-1 bg-emerald-50 text-emerald-800 text-[10px] font-bold rounded-lg border border-emerald-200 cursor-pointer">
+                    A4 প্রিন্ট
+                </button>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function renderMobileOfficeWise() {
+        if (currentRole !== 'admin') return;
+        const list = getStorageOfficers();
+        const container = document.getElementById('mobileOfficeWiseList');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const groups = {};
+        list.forEach(o => {
+            const office = o.officerCurrentOffice || 'অন্যান্য সংশ্লিষ্ট দপ্তর';
+            if (!groups[office]) groups[office] = [];
+            groups[office].push(o);
+        });
+
+        Object.keys(groups).forEach(officeName => {
+            const groupStaff = groups[officeName];
+            const box = document.createElement('div');
+            box.className = "bg-white rounded-2xl border border-slate-200 p-3 space-y-2 shadow-sm";
+            
+            let staffListHtml = groupStaff.map((s, idx) => `
+                <div class="flex justify-between items-center py-1 text-xs border-b border-slate-50 last:border-none">
+                    <div>
+                        <span class="font-bold text-slate-800">${idx+1}. ${s.name}</span>
+                        <span class="text-[10px] text-slate-500 block">${s.designation}</span>
+                    </div>
+                    <span class="text-[10px] font-num text-rose-600 font-bold">${s.joiningDate}</span>
+                </div>
+            `).join('');
+
+            box.innerHTML = `
+                <div class="flex justify-between items-center border-b pb-1.5">
+                    <h4 class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-building text-emerald-700"></i> ${officeName}
+                    </h4>
+                    <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full font-num">
+                        ${groupStaff.length} জন
+                    </span>
+                </div>
+                <div>${staffListHtml}</div>
+            `;
+            container.appendChild(box);
+        });
+    }
+
+    function showMobileToast(msg, isError = false) {
+        const toast = document.getElementById('mobileToast');
+        const text = document.getElementById('toastText');
+        const icon = document.getElementById('toastIcon');
+
+        text.textContent = msg;
+        if (isError) {
+            toast.className = "fixed bottom-16 left-4 right-4 max-w-[420px] mx-auto z-[120] bg-rose-700 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs transition-opacity duration-300 opacity-100 pointer-events-auto";
+            icon.className = "fa-solid fa-circle-exclamation text-white";
+        } else {
+            toast.className = "fixed bottom-16 left-4 right-4 max-w-[420px] mx-auto z-[120] bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs transition-opacity duration-300 opacity-100 pointer-events-auto";
+            icon.className = "fa-solid fa-circle-check text-emerald-400";
+        }
+
+        setTimeout(() => {
+            toast.classList.remove('opacity-100', 'pointer-events-auto');
+            toast.classList.add('opacity-0', 'pointer-events-none');
+        }, 3000);
+    }
+</script>
+</body>
+</html>
